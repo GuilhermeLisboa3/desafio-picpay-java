@@ -13,7 +13,7 @@ public class UserServices {
     @Autowired
     private UserRepository repository;
 
-    private void validateTransaction(User sender, BigDecimal amount) throws Exception {
+    public void validateTransaction(User sender, BigDecimal amount) throws Exception {
         if (sender.getUserType() == UserType.MERCHANT) {
             throw new Exception("Usuário do tipo lojista não está  autorizado a realizar transação");
         }
@@ -22,4 +22,9 @@ public class UserServices {
             throw new Exception("Saldo insuficiente");
         }
     }
+
+    public User findUserById(Long id) throws Exception {
+        return this.repository.findUserById(id).orElseThrow(() -> new Exception("Usuário não encontrado"));
+    }
+
 }
